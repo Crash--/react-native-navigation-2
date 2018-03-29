@@ -189,9 +189,8 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void setScreenTitleBarRightButtons(final String screenInstanceId,
-                                                     final String navigatorEventId,
-                                                     final List<TitleBarButtonParams> titleBarButtons) {
+    public static void setScreenTitleBarRightButtons(final String screenInstanceId, final String navigatorEventId,
+            final List<TitleBarButtonParams> titleBarButtons) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -205,9 +204,8 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void setScreenTitleBarLeftButtons(final String screenInstanceId,
-                                                    final String navigatorEventId,
-                                                    final TitleBarLeftButtonParams titleBarButtons) {
+    public static void setScreenTitleBarLeftButtons(final String screenInstanceId, final String navigatorEventId,
+            final TitleBarLeftButtonParams titleBarButtons) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -247,7 +245,7 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void dismissTopModal(final ScreenParams params) {
+    public static void dismissTopModal(final ScreenParams params, final Promise promise) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -257,11 +255,12 @@ public class NavigationCommandsHandler {
             @Override
             public void run() {
                 currentActivity.dismissTopModal(params);
+                promise.resolve("true");
             }
         });
     }
 
-    public static void dismissAllModals() {
+    public static void dismissAllModals(final Promise promise) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -271,6 +270,7 @@ public class NavigationCommandsHandler {
             @Override
             public void run() {
                 currentActivity.dismissAllModals();
+                promise.resolve("true");
             }
         });
     }
@@ -472,7 +472,8 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void showContextualMenu(final String screenInstanceId, final ContextualMenuParams params, final Callback onButtonClicked) {
+    public static void showContextualMenu(final String screenInstanceId, final ContextualMenuParams params,
+            final Callback onButtonClicked) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
