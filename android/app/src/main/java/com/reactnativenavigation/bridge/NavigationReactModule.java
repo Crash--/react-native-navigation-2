@@ -69,8 +69,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setScreenButtons(String screenInstanceId, String navigatorEventId,
-                                 ReadableArray rightButtonsParams, ReadableMap leftButtonParams, ReadableMap fab) {
+    public void setScreenButtons(String screenInstanceId, String navigatorEventId, ReadableArray rightButtonsParams,
+            ReadableMap leftButtonParams, ReadableMap fab) {
         if (rightButtonsParams != null) {
             setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, rightButtonsParams);
         }
@@ -82,20 +82,23 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private void setScreenTitleBarRightButtons(String screenInstanceId, String navigatorEventId, ReadableArray rightButtonsParams) {
+    private void setScreenTitleBarRightButtons(String screenInstanceId, String navigatorEventId,
+            ReadableArray rightButtonsParams) {
         List<TitleBarButtonParams> rightButtons = new TitleBarButtonParamsParser()
                 .parseButtons(BundleConverter.toBundle(rightButtonsParams));
         NavigationCommandsHandler.setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, rightButtons);
     }
 
-    private void setScreenTitleBarLeftButton(String screenInstanceId, String navigatorEventId, ReadableMap leftButtonParams) {
+    private void setScreenTitleBarLeftButton(String screenInstanceId, String navigatorEventId,
+            ReadableMap leftButtonParams) {
         TitleBarLeftButtonParams leftButton = new TitleBarLeftButtonParamsParser()
                 .parseSingleButton(BundleConverter.toBundle(leftButtonParams));
         NavigationCommandsHandler.setScreenTitleBarLeftButtons(screenInstanceId, navigatorEventId, leftButton);
     }
 
     private void setScreenFab(String screenInstanceId, String navigatorEventId, ReadableMap fab) {
-        FabParams fabParams = new FabParamsParser().parse(BundleConverter.toBundle(fab), navigatorEventId, screenInstanceId);
+        FabParams fabParams = new FabParamsParser().parse(BundleConverter.toBundle(fab), navigatorEventId,
+                screenInstanceId);
         NavigationCommandsHandler.setScreenFab(screenInstanceId, navigatorEventId, fabParams);
     }
 
@@ -214,18 +217,19 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismissAllModals() {
-        NavigationCommandsHandler.dismissAllModals();
+    public void dismissAllModals(Promise promise) {
+        NavigationCommandsHandler.dismissAllModals(promise);
     }
 
     @ReactMethod
-    public void dismissTopModal(final ReadableMap params) {
-        NavigationCommandsHandler.dismissTopModal(ScreenParamsParser.parse(BundleConverter.toBundle(params)));
+    public void dismissTopModal(final ReadableMap params, Promise promise) {
+        NavigationCommandsHandler.dismissTopModal(ScreenParamsParser.parse(BundleConverter.toBundle(params)), promise);
     }
 
     @ReactMethod
     public void showSlidingOverlay(final ReadableMap params) {
-        SlidingOverlayParams slidingOverlayParams = new SlidingOverlayParamsParser().parse(BundleConverter.toBundle(params));
+        SlidingOverlayParams slidingOverlayParams = new SlidingOverlayParamsParser()
+                .parse(BundleConverter.toBundle(params));
         NavigationCommandsHandler.showSlidingOverlay(slidingOverlayParams);
     }
 
@@ -246,9 +250,10 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void showContextualMenu(final String screenInstanceId, final ReadableMap params, final Callback onButtonClicked) {
-        ContextualMenuParams contextualMenuParams =
-                new ContextualMenuParamsParser().parse(BundleConverter.toBundle(params));
+    public void showContextualMenu(final String screenInstanceId, final ReadableMap params,
+            final Callback onButtonClicked) {
+        ContextualMenuParams contextualMenuParams = new ContextualMenuParamsParser()
+                .parse(BundleConverter.toBundle(params));
         NavigationCommandsHandler.showContextualMenu(screenInstanceId, contextualMenuParams, onButtonClicked);
     }
 
